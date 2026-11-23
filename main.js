@@ -1,6 +1,6 @@
 'use strict';
 const {
-  app, BrowserWindow, Tray, Menu, ipcMain, shell, screen, nativeImage, powerMonitor, session, protocol, net
+  app, BrowserWindow, Tray, Menu, ipcMain, shell, screen, nativeImage, powerMonitor, session, protocol, net, clipboard
 } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -299,5 +299,6 @@ if (!gotLock) {
   });
   ipcMain.handle('app:version', () => app.getVersion());
   ipcMain.handle('app:quit', () => { app.isQuitting = true; app.quit(); });
-  ipcMain.handle('shell:open', (e, url) => { if (/^https?:\/\//i.test(url)) shell.openExternal(url); });
+  ipcMain.handle('shell:open', (e, url) => { if (/^(https?:\/\/|mailto:)/i.test(String(url))) shell.openExternal(String(url)); });
+  ipcMain.handle('clipboard:write', (e, text) => { clipboard.writeText(String(text)); return true; });
 }

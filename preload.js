@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld('lahatra', {
   version: () => ipcRenderer.invoke('app:version'),
   quit: () => ipcRenderer.invoke('app:quit'),
   openExternal: (u) => ipcRenderer.invoke('shell:open', u),
+  copyText: (t) => ipcRenderer.invoke('clipboard:write', t),
   setZoom: (f) => { try { webFrame.setZoomFactor(f); } catch (e) { /* ignoré */ } },
   on: (channel, cb) => {
     if (['session-lock', 'new-task', 'resume'].includes(channel)) ipcRenderer.on(channel, () => cb());

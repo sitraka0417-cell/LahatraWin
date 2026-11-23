@@ -224,6 +224,11 @@ L.renderSettings = () => {
       <p class="muted" style="margin:.2rem 0 1rem;font-size:.85rem">Synchronisation Google active — mêmes tâches que sur votre téléphone.</p>
       <button class="btn warn-ghost" data-action="signout">${L.icon('logout')}Se déconnecter</button></div>
 
+    <div class="card set-card"><h2>${L.icon('share')}Partager Lahatra</h2>
+      ${row('Page de téléchargement', `<span style="overflow-wrap:anywhere">${E(L.LINKS.page)}</span>`, `<button class="btn sm" data-action="share-copy" data-k="page">Copier le lien</button><button class="btn ghost sm" data-action="share-wa">WhatsApp</button><button class="btn ghost sm" data-action="share-mail">E-mail</button><button class="btn ghost sm" data-action="share-open" data-k="page">Ouvrir</button>`)}
+      ${row('Lien direct de l’installateur (.exe)', `<span style="overflow-wrap:anywhere">${E(L.LINKS.exe)}</span>`, `<button class="btn ghost sm" data-action="share-copy" data-k="exe">Copier le lien</button>`)}
+      <p class="muted" style="font-size:.8rem;margin:.6rem 0 0">Envoyez le lien à vos proches : ils téléchargent, installent et se connectent avec leur propre compte Google.</p></div>
+
     <div class="card set-card"><h2>${L.icon('bell')}Alarmes</h2>
       ${row('Alarme du matin', 'Sonne chaque jour et affiche vos tâches du jour', L.switchHtml('data-toggle="morningOn"', s.morningOn))}
       ${row('Heure de l’alarme du matin', '', `<input class="input" type="time" data-input="morningTime" value="${E(s.morningTime)}" ${s.morningOn ? '' : 'disabled'}>`)}
@@ -545,3 +550,17 @@ L.actions.signin = async () => {
   }
 };
 L.actions['signin-cancel'] = () => { window.lahatra.googleCancel(); };
+
+// ---------- Partage ----------
+L.LINKS = {
+  page: 'https://sitraka0417-cell.github.io/LahatraWin/telecharger.html',
+  exe: 'https://github.com/sitraka0417-cell/LahatraWin/releases/latest/download/Lahatra-Setup.exe'
+};
+L.shareText = () => 'Lahatra : gestion de tâches synchronisée avec Google. Télécharger pour Windows : ' + L.LINKS.page;
+L.actions['share-copy'] = async (el) => {
+  try { await window.lahatra.copyText(L.LINKS[el.dataset.k] || L.LINKS.page); L.toast('Lien copié ✓'); }
+  catch (e) { L.toast('Copie impossible', true); }
+};
+L.actions['share-wa'] = () => window.lahatra.openExternal('https://wa.me/?text=' + encodeURIComponent(L.shareText()));
+L.actions['share-mail'] = () => window.lahatra.openExternal('mailto:?subject=' + encodeURIComponent('Lahatra pour Windows') + '&body=' + encodeURIComponent(L.shareText()));
+L.actions['share-open'] = (el) => window.lahatra.openExternal(L.LINKS[el.dataset.k] || L.LINKS.page);
