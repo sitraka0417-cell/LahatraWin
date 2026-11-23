@@ -1,0 +1,64 @@
+{
+  "name": "lahatra-windows",
+  "productName": "Lahatra",
+  "version": "1.0.0",
+  "description": "Lahatra : gestion de tâches, synchronisée avec Google",
+  "author": "AMAF Imamo",
+  "main": "main.js",
+  "scripts": {
+    "build:ui": "node scripts/build-ui.js",
+    "start": "npm run build:ui && electron .",
+    "dist": "npm run build:ui && electron-builder --win nsis --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.24.0",
+    "firebase": "^10.14.1"
+  },
+  "build": {
+    "appId": "com.amaf.imamo.lahatra.windows",
+    "productName": "Lahatra",
+    "executableName": "Lahatra",
+    "copyright": "© 2026 AMAF Imamo",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "config.json",
+      "renderer/**/*",
+      "assets/**/*",
+      "!renderer/fb-entry.js"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "Lahatra-Setup.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Lahatra",
+      "uninstallDisplayName": "Lahatra",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true,
+      "language": "1036"
+    }
+  }
+}

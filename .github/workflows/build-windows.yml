@@ -1,0 +1,49 @@
+name: Installateur Windows Lahatra
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Numéro de version automatique (1.0.N)
+        shell: bash
+        run: npm pkg set version=1.0.${{ github.run_number }}
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Construire l'installateur
+        run: npm run dist
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Lahatra-Windows-Setup
+          path: release/Lahatra-Setup.exe
+
+      - name: Publier la version (lien de téléchargement public)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Lahatra 1.0.${{ github.run_number }}
+          make_latest: true
+          files: release/Lahatra-Setup.exe
+          body: |
+            Installateur Windows de Lahatra.
+            1. Téléchargez Lahatra-Setup.exe et lancez-le.
+            2. Si Windows affiche « Windows a protégé votre ordinateur » : Informations complémentaires, puis Exécuter quand même.
+            3. Pour mettre à jour, relancez simplement le nouvel installateur : vos réglages sont conservés.

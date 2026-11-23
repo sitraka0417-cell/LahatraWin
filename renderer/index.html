@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: wss:; font-src 'self' data:; object-src 'none'; base-uri 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lahatra</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="boot" class="boot"><div class="boot-logo">Lahatra</div></div>
+
+  <section id="login" class="login hidden"></section>
+
+  <div id="shell" class="shell hidden">
+    <nav class="sidebar" id="sidebar"></nav>
+    <main class="content">
+      <section class="view" id="view-agenda"></section>
+      <section class="view" id="view-tasks">
+        <div class="page-head"><h1>Toutes les tâches</h1></div>
+        <div class="toolbar">
+          <label class="search"><span id="ico-search"></span>
+            <input id="search" type="search" placeholder="Rechercher une tâche…  (Ctrl+F)" autocomplete="off"></label>
+          <div class="chips" id="status-chips"></div>
+          <div class="chips" id="cat-chips"></div>
+        </div>
+        <div id="tasks-list"></div>
+      </section>
+      <section class="view" id="view-stats"></section>
+      <section class="view" id="view-settings"></section>
+    </main>
+    <button class="fab" id="fab" data-action="new"></button>
+  </div>
+
+  <div id="lock" class="lock hidden"></div>
+  <div id="modal-root"></div>
+  <div id="alarm-root"></div>
+  <div id="toasts" class="toasts"></div>
+
+  <script src="vendor/firebase.bundle.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/alarms.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

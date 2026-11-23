@@ -1,0 +1,11 @@
+{
+  "authPage": "https://sitraka0417-cell.github.io/LahatraWin/",
+  "firebase": {
+    "apiKey": "AIzaSyCZomekYtmwI5EosNFyyB9Mve2tJs3QYqM",
+    "authDomain": "lahatra-7be8b.firebaseapp.com",
+    "projectId": "lahatra-7be8b",
+    "storageBucket": "lahatra-7be8b.firebasestorage.app",
+    "messagingSenderId": "827358147319",
+    "appId": "1:827358147319:android:a92a098c0a29636ce399f2"
+  }
+}
